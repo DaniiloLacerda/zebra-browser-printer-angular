@@ -1,7 +1,42 @@
-<textarea #barcodeInput rows="4" cols="50" placeholder="Enter barcode text here"></textarea>
-<br/>
+<textarea
+  #barcodeInput
+  rows="4"
+  cols="50"
+  placeholder="Enter barcode text here"
+></textarea>
+<br />
 <input
   type="button"
   value="Print Zebra"
   (click)="printBarcode(barcodeInput.value)"
 />
+<br />
+<br />
+<input type="button" value="Print ZPL" (click)="printBarcode('', 'ZPL')" />
+<br />
+<br />
+<input type="button" value="Print EPL" (click)="printBarcode('', 'EPL')" />
+
+<br />
+<br />
+<input
+  type="button"
+  value="Print FEEGOW"
+  (click)="printBarcode('', 'FEEGOW')"
+/>
+
+<br />
+<br />
+<input
+  type="button"
+  value="Print PARDINI"
+  (click)="printBarcode('', 'PARDINI')"
+/>
+
+<br />
+<br />
+<input type="button" value="CHECK STATUS" (click)="checkStatus()" />
+
+<br />
+<br />
+<input type="button" value="IMP PADRAO" (click)="getDefault()" />
