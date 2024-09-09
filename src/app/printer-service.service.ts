@@ -58,8 +58,7 @@ export class PrinterService {
     const endpoint = this.API_URL + 'default';
 
     try {
-      const res = await axios.get(endpoint, config);
-      const data = res.data();
+      const { data } = await axios.get(endpoint, config);
 
       if (
         data &&
@@ -112,6 +111,11 @@ export class PrinterService {
 
   checkPrinterStatus = async () => {
     await this.write('~HQES');
+    if (!this.device) {
+      const device = await this.getDefaultPrinter();
+      this.device = device;
+    }
+
     const result = await this.read();
 
     const errors = [];
@@ -181,12 +185,11 @@ export class PrinterService {
       const config = {
         headers: {
           'Content-Type': 'text/plain;charset=UTF-8',
-          'Accept': '/'
+          Accept: '/',
         },
-        body: JSON.stringify(myData),
       };
 
-      await axios.post(endpoint, config);
+      await axios.post(endpoint, myData, config);
     } catch (error) {
       throw new Error(error as any);
     }
@@ -204,10 +207,9 @@ export class PrinterService {
         headers: {
           'Content-Type': 'text/plain;charset=UTF-8',
         },
-        body: JSON.stringify(myData),
       };
 
-      const { data } = await axios.post(endpoint, config);
+      const { data } = await axios.post(endpoint, myData, config);
 
       return data;
     } catch (error) {
